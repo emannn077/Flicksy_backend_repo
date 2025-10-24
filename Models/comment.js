@@ -14,6 +14,4 @@ const commentSchema = new mongoose.Schema({
 const Comment = mongoose.model("Comment", commentSchema)
 module.exports = Comment
 
-//ref post/user/owner
 
-//ref path for ref more than one model e.g owner ref path , refpath : poster but does it work ? not sure
