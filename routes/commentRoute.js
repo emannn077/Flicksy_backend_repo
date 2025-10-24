@@ -3,10 +3,10 @@ const commentctrl = require("../Controllers/CommentController")
 
 
 
-router.get("",)
-router.post("")
-router.put("")
-router.delete("")
+router.get("", commentctrl.getComments)
+router.post("", commentctrl.postComments)
+router.put("", commentctrl.putComments)
+router.delete("", commentctrl.deleteComments)
 
 
 module.exports = router
