@@ -12,15 +12,23 @@ exports.getComments = async (req, res) => {
 
 exports.createComments = async (req, res) => {
   try {
-  } catch (error) {}
+    const comments = await Comment.create(req.body)
+    res.send(comments)
+  } catch (error) {
+    throw error
+  }
 }
 
 exports.putComments = async (req, res) => {
   try {
-  } catch (error) {}
+  } catch (error) {
+    throw error
+  }
 }
 
 exports.deleteComments = async (req, res) => {
   try {
-  } catch (error) {}
+  } catch (error) {
+    throw error
+  }
 }
