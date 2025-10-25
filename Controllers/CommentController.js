@@ -21,6 +21,13 @@ exports.createComments = async (req, res) => {
 
 exports.putComments = async (req, res) => {
   try {
+    const comments = await Comment.findById(req.params.commentId)
+    if (comments.owner.equal(req.session.user._id)) {
+      await Comment.updateOne(req.body)
+      res.status(200).send(comments)
+    } else {
+      res.status(400).send("you don't have permission to do that")
+    }
   } catch (error) {
     throw error
   }
@@ -28,6 +35,13 @@ exports.putComments = async (req, res) => {
 
 exports.deleteComments = async (req, res) => {
   try {
+    const comments = await Comment.findById(req.params.commentId)
+    if (comments.owner.equal(req.session.user._id)) {
+      await Comment.deleteOne(req.body)
+      res.status(200).send(comments)
+    } else {
+      res.status(400).send("you don't have permission to do that")
+    }
   } catch (error) {
     throw error
   }
