@@ -10,7 +10,7 @@ exports.getComments = async (req, res) => {
   }
 }
 
-exports.postComments = async (req, res) => {
+exports.createComments = async (req, res) => {
   try {
   } catch (error) {}
 }
