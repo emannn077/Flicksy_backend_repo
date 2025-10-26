@@ -8,12 +8,11 @@ const mongoose = require("./db/index")
 // Middleware
 const methodOverride = require("method-override")
 const morgan = require("morgan")
-const session = require("express-session")
-const passUserToView = require("./middleware/pass-user-to-view")
 
 // Routers
 const authRouter = require("./routes/auth")
 const userRouter = require("./routes/user")
+const commentRouter = require("./routes/commentRoute")
 
 const app = express()
 const port = process.env.PORT || 3001
@@ -25,19 +24,10 @@ app.use(methodOverride("_method"))
 app.use(morgan("dev"))
 app.use(express.static(path.join(__dirname, "public")))
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-)
-
-app.use(passUserToView)
-
 // ===== ROUTES =====
 app.use("/auth", authRouter) // Auth APIs
 app.use("/users", userRouter) // Protected user APIs
+app.use("/comment", commentRouter)
 
 // ===== START SERVER =====
 app.listen(port, () => {
