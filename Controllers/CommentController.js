@@ -1,50 +1,46 @@
 const Comment = require("../models/comment")
 
-exports.getComments = async (req, res) => {
+const getComments = async (req, res) => {
   try {
-    //const comments = await Comment.find({owner: req.session.user._id})
     const comments = await Comment.find({}).populate("owner")
-    res.send(comments)
+    res.status(200).send(comments)
   } catch (error) {
     throw error
   }
 }
 
-exports.createComments = async (req, res) => {
+const createComments = async (req, res) => {
   try {
     const comments = await Comment.create(req.body)
-    res.send(comments)
+    res.status(200).send(comments)
   } catch (error) {
     throw error
   }
 }
 
-exports.putComments = async (req, res) => {
+const putComments = async (req, res) => {
   try {
-    const comments = await Comment.findById(req.params.commentId)
-    console.log(comments.owner)
-    if (comments.owner.equal(req.session.user._id)) {
-      await Comment.updateOne(req.body)
-      res.status(200).send(comments)
-    } else {
-      res.status(400).send("you don't have permission to do that")
-    }
+    const comments = await Comment.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    })
+    res.status(200).send(comments)
   } catch (error) {
     throw error
   }
 }
 
-exports.deleteComments = async (req, res) => {
+const deleteComments = async (req, res) => {
   try {
-    const comments = await Comment.findById(req.params.commentId)
-    console.log(comments)
-    if (comments.owner.equal(req.session.user._id)) {
-      await Comment.deleteOne(req.body)
-      res.status(200).send(comments)
-    } else {
-      res.status(400).send("you don't have permission to do that")
-    }
+    await Comment.deleteOne({ _id: req.params.id })
+    res.status(200).send({ msg: "Comment Deleted", id: req.params.id })
   } catch (error) {
     throw error
   }
+}
+
+module.exports = {
+  getComments,
+  createComments,
+  putComments,
+  deleteComments,
 }
