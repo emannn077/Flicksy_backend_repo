@@ -1,4 +1,4 @@
-const { Comment } = require("../models/comment")
+const Comment = require("../models/comment")
 
 exports.getComments = async (req, res) => {
   try {
@@ -22,6 +22,7 @@ exports.createComments = async (req, res) => {
 exports.putComments = async (req, res) => {
   try {
     const comments = await Comment.findById(req.params.commentId)
+
     if (comments.owner.equal(req.session.user._id)) {
       await Comment.updateOne(req.body)
       res.status(200).send(comments)
@@ -36,6 +37,7 @@ exports.putComments = async (req, res) => {
 exports.deleteComments = async (req, res) => {
   try {
     const comments = await Comment.findById(req.params.commentId)
+    console.log(comments)
     if (comments.owner.equal(req.session.user._id)) {
       await Comment.deleteOne(req.body)
       res.status(200).send(comments)
