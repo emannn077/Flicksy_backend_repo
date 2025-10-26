@@ -8,7 +8,7 @@ require("./db/index")
 
 const challengeRouter = require("./routes/challengeRoute")
 const commentRouter = require("./routes/commentRoute")
-const postRouter = require("./routes/postRoute.js")
+const postRouter = require("./routes/postRoute")
 const userRouter = require("./routes/userRoute")
 
 const app = express()
