@@ -22,7 +22,7 @@ exports.createComments = async (req, res) => {
 exports.putComments = async (req, res) => {
   try {
     const comments = await Comment.findById(req.params.commentId)
-
+    console.log(comments.owner)
     if (comments.owner.equal(req.session.user._id)) {
       await Comment.updateOne(req.body)
       res.status(200).send(comments)

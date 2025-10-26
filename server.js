@@ -3,6 +3,7 @@ require("dotenv").config()
 const express = require("express")
 const logger = require("morgan")
 const cors = require("cors")
+const session = require("express-session")
 const methodOverride = require("method-override")
 require("./db/index")
 
@@ -14,7 +15,13 @@ const userRouter = require("./routes/userRoute")
 const app = express()
 const PORT = process.env.PORT || 3001
 const db = require("./db/index")
-
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "yourSecretKey",
+    resave: false,
+    saveUninitialized: false,
+  })
+)
 app.use(methodOverride("._method"))
 app.use(cors())
 app.use(express.json())
