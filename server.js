@@ -21,6 +21,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(logger("dev"))
 
+//use routers
+app.use("/comment", commentRouter)
+
 //testing the route
 app.get("/api", (req, res) => {
   res.send("Flicksy is running")
