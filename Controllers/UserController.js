@@ -1,94 +1,102 @@
-const { User } = require("../models/user")
-const middleware = require("../middleware/index")
+const User = require("../models/user")
+const bcrypt = require("bcrypt")
 
-//to register User
-const Register = async (req, res) => {
+// ===== AUTH FUNCTIONS =====
+exports.auth_signup_post = async (req, res) => {
   try {
-    const { firstName, lastName, username, email, password, profile_picture } =
-      req.body
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      confirmPassword,
+      profile_picture,
+    } = req.body
 
-    const existingUser = await User.exist({ email })
-    if (existingUser) {
+    // Check if username or email already exists
+    const existingUser = await User.findOne({ $or: [{ username }, { email }] })
+    if (existingUser)
+      return res.status(400).json({ msg: "Username or email already taken" })
+
+    // Only check confirmPassword — do NOT save it
+    if (password !== confirmPassword)
       return res
         .status(400)
-        .send("A user has already been registered with this email ")
-    }
-    const passwordDigest = await middleware.hashPassword(password)
+        .json({ msg: "Password and confirm password must match" })
+
+    // Hash password and create user
+    const hashedPassword = bcrypt.hashSync(password, 10)
     const user = await User.create({
       firstName,
       lastName,
       username,
       email,
-      passwordDigest,
-      profile_picture,
+      password: hashedPassword,
+      profile_picture: profile_picture || "",
       points: 0,
     })
 
-    res.status(200).send(user)
+    res
+      .status(201)
+      .json({ msg: `User ${user.username} registered successfully`, user })
   } catch (error) {
-    console.log(error)
-    res.status(500).send({ msg: "Error registering user" })
+    res.status(500).json({ msg: "Error registering user", error })
   }
 }
 
-const Login = async (req, res) => {
+exports.auth_signin_post = async (req, res) => {
   try {
-    const { email, password } = req.body
-    const user = await User.findOne({ email })
-    if (!user) return res.status(404).send("User not found!")
+    const { username, password } = req.body
 
-    const matched = await middleware.comparePassword(
-      password,
-      user.passwordDigest
-    )
-    if (matched) {
-      const payload = {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        points: user.points,
-      }
-      const token = middleware.createToken(payload)
-      return res.status(200).send({ user: payload, token })
-    } else {
-      return res.status(401).send("Invalid credentials!")
+    const userInDatabase = await User.findOne({ username })
+    if (!userInDatabase)
+      return res.status(404).json({ msg: "Invalid credentials" })
+
+    const validPassword = bcrypt.compareSync(password, userInDatabase.password)
+    if (!validPassword)
+      return res.status(404).json({ msg: "Invalid credentials" })
+
+    // Initialize session
+    req.session.user = {
+      id: userInDatabase._id,
+      username: userInDatabase.username,
+      firstName: userInDatabase.firstName,
+      lastName: userInDatabase.lastName,
+      email: userInDatabase.email,
+      profile_picture: userInDatabase.profile_picture,
+      points: userInDatabase.points,
     }
+
+    res.status(200).json({ msg: "Login successful", user: req.session.user })
   } catch (error) {
-    console.log(error)
-    res.status(500).send({ msg: "Error logging in" })
+    res.status(500).json({ msg: "Error logging in", error })
   }
 }
 
-const UpdatePassword = async (req, res) => {
+exports.auth_signout_get = async (req, res) => {
+  req.session.destroy()
+  res.status(200).json({ msg: "Logged out successfully" })
+}
+
+// ===== USER PROTECTED ACTIONS =====
+exports.updatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body
-    let user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id)
 
-    const matched = await middleware.comparePassword(
-      oldPassword,
-      user.passwordDigest
-    )
-    if (matched) {
-      const passwordDigest = await middleware.hashPassword(newPassword)
-      await User.findByIdAndUpdate(req.params.id, { passwordDigest })
-      return res.status(200).send("Password updated successfully!")
-    }
-    res.status(401).send("Old password incorrect!")
+    if (!user) return res.status(404).json({ msg: "User not found" })
+
+    const matched = bcrypt.compareSync(oldPassword, user.password)
+    if (!matched)
+      return res.status(400).json({ msg: "Old password is incorrect" })
+
+    const hashedPassword = bcrypt.hashSync(newPassword, 10)
+    user.password = hashedPassword
+    await user.save()
+
+    res.status(200).json({ msg: "Password updated successfully" })
   } catch (error) {
-    console.log(error)
-    res.status(500).send("Error updating password")
+    res.status(500).json({ msg: "Error updating password", error })
   }
-}
-
-//to check JWT sessions
-const CheckSession = async (req, res) => {
-  const { payload } = res.locals
-  res.status(200).send(payload)
-}
-
-module.exports = {
-  Register,
-  Login,
-  UpdatePassword,
-  CheckSession,
 }
