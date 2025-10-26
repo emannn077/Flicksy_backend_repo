@@ -1,4 +1,23 @@
 {
+  "name": "flicksy_backend_repo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emannn077/Flicksy_backend_repo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emannn077/Flicksy_backend_repo/issues"
+  },
+  "homepage": "https://github.com/emannn077/Flicksy_backend_repo#readme",
   "dependencies": {
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
@@ -7,6 +26,7 @@
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
+    "jsonwebtoken": "^9.0.2",
     "method-override": "^3.0.0",
     "mongoose": "^8.19.2",
     "morgan": "^1.10.1",
