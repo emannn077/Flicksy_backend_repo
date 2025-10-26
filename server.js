@@ -1,38 +1,45 @@
-require("dotenv").config()
-
 const express = require("express")
-const logger = require("morgan")
-const cors = require("cors")
-const methodOverride = require("method-override")
-require("./db/index")
+require("dotenv").config()
+const path = require("path")
 
-const challengeRouter = require("./routes/challengeRoute")
-const commentRouter = require("./routes/commentRoute")
-const postRouter = require("./routes/postRoute")
-const userRouter = require("./routes/userRoute")
+// Database
+const mongoose = require("./db/index")
+
+// Middleware
+const methodOverride = require("method-override")
+const morgan = require("morgan")
+const session = require("express-session")
+const passUserToView = require("./middleware/pass-user-to-view")
+
+// Routers
+const authRouter = require("./routes/auth")
+const userRouter = require("./routes/user")
 
 const app = express()
-const PORT = process.env.PORT || 3001
-const db = require("./db/index")
+const port = process.env.PORT || 3001
 
-app.use(methodOverride("._method"))
-app.use(cors())
+// ===== MIDDLEWARES =====
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(logger("dev"))
+app.use(methodOverride("_method"))
+app.use(morgan("dev"))
+app.use(express.static(path.join(__dirname, "public")))
 
-//use routers
-app.use("/comment", commentRouter)
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+)
 
-//testing the route
-app.get("/api", (req, res) => {
-  res.send("Flicksy is running")
-})
+app.use(passUserToView)
 
-//Api routes
+// ===== ROUTES =====
+app.use("/auth", authRouter) // Auth APIs
+app.use("/users", userRouter) // Protected user APIs
 
-const { error } = require("console")
-
-app.listen(PORT, () => {
-  console.log(`Express server is running on port ${PORT}...`)
+// ===== START SERVER =====
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`)
 })
