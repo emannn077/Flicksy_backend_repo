@@ -12,6 +12,7 @@ const morgan = require("morgan")
 // Routers
 const authRouter = require("./routes/auth")
 const userRouter = require("./routes/user")
+const commentRouter = require("./routes/commentRoute")
 
 const app = express()
 const port = process.env.PORT || 3001
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, "public")))
 // ===== ROUTES =====
 app.use("/auth", authRouter) // Auth APIs
 app.use("/users", userRouter) // Protected user APIs
+app.use("/comment", commentRouter)
 
 // ===== START SERVER =====
 app.listen(port, () => {
