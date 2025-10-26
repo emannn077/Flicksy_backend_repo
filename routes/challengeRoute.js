@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const controller = require('../Controllers/ChallengeController')
-
+//routes to challenge
 router.get('/', controller.GetChallenges)
 router.get('/:challengeId', controller.GetChallengeById)
 router.post('/', controller.CreateChallenge)

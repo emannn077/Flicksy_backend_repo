@@ -1,5 +1,5 @@
 const Challenge = require('../Models/Challenge')
-
+//
 const GetChallenges = async (req, res) => {
   try {
     const challenges = await Challenge.find({})
