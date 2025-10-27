@@ -2,25 +2,20 @@ const router = require("express").Router()
 const userCtrl = require("../controllers/UserController")
 const middleware = require("../middleware/index")
 
-router.get(
-  "/",
-  middleware.stripToken,
-  middleware.verifyToken,
-  userCtrl.getUserProfile
-)
+router.get("/", middleware.stripToken, middleware.verifyToken, userCtrl.getUser)
 
 router.post(
   "/",
   middleware.stripToken,
   middleware.verifyToken,
-  userCtrl.createUserProfile
+  userCtrl.createUser
 )
 
 router.delete(
   "/:profileId",
   middleware.stripToken,
   middleware.verifyToken,
-  userCtrl.deleteUserProfile
+  userCtrl.deleteUser
 )
 
 module.exports = router
