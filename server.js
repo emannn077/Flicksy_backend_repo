@@ -13,6 +13,8 @@ const morgan = require('morgan')
 const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
 const commentRouter = require('./routes/commentRoute')
+const challengeRouter = require('./routes/challengeRoute')
+const postRouter = require('./routes/postRoute')
 
 const app = express()
 const port = process.env.PORT || 3001
@@ -28,6 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/auth', authRouter) // Auth APIs
 app.use('/users', userRouter) // Protected user APIs
 app.use('/comment', commentRouter)
+app.use('/challenge', challengeRouter)
+app.use('/post', postRouter)
 
 // ===== START SERVER =====
 app.listen(port, () => {
