@@ -11,6 +11,15 @@ const getUser = async (req, res) => {
   }
 }
 
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.userId, req.body)
+    res.status(200).send({ msg: "user updated" })
+  } catch (error) {
+    throw error
+  }
+}
+
 const deleteUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.userId)
@@ -25,5 +34,6 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getUser,
+  updateUser,
   deleteUser,
 }
