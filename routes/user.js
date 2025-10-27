@@ -1,21 +1,21 @@
 const router = require("express").Router()
-const userCtrl = require("../controllers/UserController")
+const controller = require("../controllers/UserController")
 const middleware = require("../middleware/index")
 
-router.get("/", middleware.stripToken, middleware.verifyToken, userCtrl.getUser)
-
-router.put(
-  "/:profileId",
+// Get user profile
+router.get(
+  "/profile/:id",
   middleware.stripToken,
   middleware.verifyToken,
-  userCtrl.updateUser
+  controller.GetUserProfile
 )
 
-router.delete(
-  "/:profileId",
+// Update user profile
+router.put(
+  "/profile/:id",
   middleware.stripToken,
   middleware.verifyToken,
-  userCtrl.deleteUser
+  controller.UpdateProfile
 )
 
 module.exports = router

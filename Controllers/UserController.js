@@ -1,41 +1,52 @@
-//for user profile
 const User = require("../models/User")
-const bcrypt = require("bcrypt")
-
-const getUser = async (req, res) => {
+// Get profile
+const GetUserProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId)
-    if (!user) {
-      return res.status(404).send({ msg: "Errror User not found!" })
-    }
+    const { id } = req.params
+    const user = await User.findById(id).select(
+      "username profile_picture points email firstName lastName"
+    )
+    if (!user) return res.status(404).json({ message: "User not found" })
+    res.json(user)
   } catch (error) {
-    throw error
+    res.status(500).json({ message: "Server error", error: error.message })
   }
 }
 
-const updateUser = async (req, res) => {
+const UpdateProfile = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.userId, req.body)
-    res.status(200).send({ msg: "user updated" })
-  } catch (error) {
-    throw error
-  }
-}
+    const { id } = req.params
+    const { email, username, firstName, lastName, profile_picture } = req.body
 
-const deleteUser = async (req, res) => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.userId)
-    res.status(200).send({ msg: "deleted" })
-    if (!user) {
-      return res.status(400).send({ msg: "user not found" })
+    // Check if another user already uses this email
+    const existingEmailUser = await User.findOne({ email })
+    if (existingEmailUser && existingEmailUser._id.toString() !== id) {
+      return res.status(400).send({ msg: "Email already in use!" })
     }
+
+    // Check if another user already uses this username
+    const existingUsernameUser = await User.findOne({ username })
+    if (existingUsernameUser && existingUsernameUser._id.toString() !== id) {
+      return res.status(400).send({ msg: "Username already taken!" })
+    }
+
+    // Proceed to update user info
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { firstName, lastName, username, email, profile_picture },
+      { new: true }
+    )
+
+    res
+      .status(200)
+      .send({ msg: "Profile updated successfully!", user: updatedUser })
   } catch (error) {
-    throw error
+    console.error(error)
+    res.status(500).send({ msg: "Error updating profile" })
   }
 }
 
 module.exports = {
-  getUser,
-  updateUser,
-  deleteUser,
+  GetUserProfile,
+  UpdateProfile,
 }
