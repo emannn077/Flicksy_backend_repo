@@ -4,11 +4,11 @@ const middleware = require("../middleware/index")
 
 router.get("/", middleware.stripToken, middleware.verifyToken, userCtrl.getUser)
 
-router.post(
-  "/",
+router.put(
+  "/:profileId",
   middleware.stripToken,
   middleware.verifyToken,
-  userCtrl.createUser
+  userCtrl.updateUser
 )
 
 router.delete(
