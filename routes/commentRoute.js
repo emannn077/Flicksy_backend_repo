@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const commentctrl = require("../Controllers/CommentController")
-
+const middleware = require("../middleware/index")
 router.get(
   "/",
   middleware.stripToken,

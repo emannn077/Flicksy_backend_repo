@@ -4,8 +4,8 @@ const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    username: { type: String, required: true },
-    email: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     profile_picture: { type: String, default: "" },
     points: { type: Number, default: 0 },
@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-const User = mongoose.model("User", userSchema)
+// ✅ Prevent OverwriteModelError
+const User = mongoose.models.User || mongoose.model("User", userSchema)
 
-module.exports = User // ✅ export the model directly
+module.exports = User
