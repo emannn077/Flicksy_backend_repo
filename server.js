@@ -15,9 +15,19 @@ const userRouter = require("./routes/user")
 const commentRouter = require("./routes/commentRoute")
 const challengeRouter = require("./routes/challengeRoute")
 const postRouter = require("./routes/postRoute")
+const cameraRouter = require("./routes/cameraRoute")
 
 const app = express()
 const port = process.env.PORT || 3001
+
+// ===== enabling cors here ====
+app.use(
+  cors({
+    origin: "http://localhost:5173", // match the actual origin
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+)
 
 // ===== MIDDLEWARES =====
 app.use(express.urlencoded({ extended: false }))
@@ -26,6 +36,7 @@ app.use(express.json())
 app.use(methodOverride("_method"))
 app.use(morgan("dev"))
 app.use(express.static(path.join(__dirname, "public")))
+app.use(cors())
 
 // ===== ROUTES =====
 app.use("/auth", authRouter) // Auth APIs
@@ -33,6 +44,7 @@ app.use("/users", userRouter) // Protected user APIs
 app.use("/comment", commentRouter)
 app.use("/challenge", challengeRouter)
 app.use("/post", postRouter)
+app.use("/camera", cameraRouter)
 
 // ===== START SERVER =====
 app.listen(port, () => {

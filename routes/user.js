@@ -18,4 +18,10 @@ router.put(
   controller.UpdateProfile
 )
 
+router.get(
+  "/profile/:id/posts",
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.GetUserPosts
+)
 module.exports = router
