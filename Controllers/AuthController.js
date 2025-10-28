@@ -1,4 +1,4 @@
-const User = require("../models/user")
+const User = require("../models/User")
 const middleware = require("../middleware")
 
 const auth_signup_post = async (req, res) => {
