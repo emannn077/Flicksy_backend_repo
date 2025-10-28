@@ -7,13 +7,13 @@ const userSchema = new mongoose.Schema(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    profile_picture: { type: String, default: "" },
+    profile_picture: { type: String },
     points: { type: Number, default: 0 },
   },
   { timestamps: true }
 )
 
 // ✅ Prevent OverwriteModelError
-const User = mongoose.models.User || mongoose.model("User", userSchema)
+const User = mongoose.model("User", userSchema)
 
 module.exports = User

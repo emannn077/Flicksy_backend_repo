@@ -1,5 +1,3 @@
-
-
 const express = require("express")
 require("dotenv").config()
 const path = require("path")
@@ -34,9 +32,9 @@ app.use(
 // ===== MIDDLEWARES =====
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(methodOverride('_method'))
-app.use(morgan('dev'))
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(methodOverride("_method"))
+app.use(morgan("dev"))
+app.use(express.static(path.join(__dirname, "public")))
 app.use(cors())
 
 // ===== ROUTES =====

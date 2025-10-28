@@ -3,12 +3,12 @@ const mongoose = require("mongoose")
 const postSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "User",
     required: true,
   },
   challenge_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "challenge",
+    ref: "Challenge",
     required: false, // not required for every post
   },
   image_url: {

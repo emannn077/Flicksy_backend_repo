@@ -1,6 +1,13 @@
 const router = require("express").Router()
 const { CreateCameraPost } = require("../Controllers/CameraController")
+const middleware = require("../middleware/index")
 
-router.post("/", CreateCameraPost)
+// POST /camera/:userId
+router.post(
+  "/:userId",
+  middleware.stripToken,
+  middleware.verifyToken,
+  CreateCameraPost
+)
 
 module.exports = router
