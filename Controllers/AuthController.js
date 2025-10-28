@@ -1,4 +1,4 @@
-const User = require("../models/user")
+const User = require("../models/User")
 const middleware = require("../middleware")
 
 const auth_signup_post = async (req, res) => {
@@ -43,8 +43,8 @@ const auth_signin_post = async (req, res) => {
     // If they match, constructs a payload object of values we want on the front end
     if (matched) {
       let payload = {
-        id: user._id,
-        name: user.username,
+        _id: user._id,
+        username: user.username,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
