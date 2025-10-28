@@ -1,30 +1,26 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const postSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
-    required: true
+    ref: "user",
+    required: true,
   },
-
   challenge_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'challenge',
-    required: true
+    ref: "challenge",
+    required: false, // not required for every post
   },
-
   image_url: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
-
   caption: {
     type: String,
-    trim: true
-  }
+    trim: true,
+  },
 })
 
-const Post = mongoose.model('Post', postSchema)
-
+const Post = mongoose.models.Post || mongoose.model("Post", postSchema)
 module.exports = Post
