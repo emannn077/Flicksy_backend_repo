@@ -1,6 +1,7 @@
 const express = require('express')
 require('dotenv').config()
 const path = require('path')
+const cors = require('cors')
 
 // Database
 const mongoose = require('./db/index')
@@ -25,6 +26,7 @@ app.use(express.json())
 app.use(methodOverride('_method'))
 app.use(morgan('dev'))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(cors())
 
 // ===== ROUTES =====
 app.use('/auth', authRouter) // Auth APIs
