@@ -3,6 +3,12 @@ const commentctrl = require("../Controllers/CommentController")
 const middleware = require("../middleware")
 
 router.get(
+  "/post/:postId",
+  middleware.stripToken,
+  middleware.verifyToken,
+  commentctrl.getCommentsByPost
+)
+router.get(
   "/",
   middleware.stripToken,
   middleware.verifyToken,

@@ -40,7 +40,7 @@ app.use(cors())
 
 // ===== ROUTES =====
 app.use("/auth", authRouter) // Auth APIs
-app.use("/user", userRouter) // Protected user APIs
+app.use("/users", userRouter) // Protected user APIs
 app.use("/comment", commentRouter)
 app.use("/challenge", challengeRouter)
 app.use("/post", postRouter)
