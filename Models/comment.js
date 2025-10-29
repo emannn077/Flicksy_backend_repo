@@ -2,12 +2,18 @@ const mongoose = require("mongoose")
 
 const commentSchema = new mongoose.Schema(
   {
-    username: { type: String, required: true },
-    thread: { type: String },
-    owner: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    post: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+      required: true,
+    },
+    thread: {
+      type: String,
     },
   },
   { timestamps: true }

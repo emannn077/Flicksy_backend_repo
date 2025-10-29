@@ -15,25 +15,42 @@ const GetUserProfile = async (req, res) => {
 
 const UpdateProfile = async (req, res) => {
   try {
+    // this is to check if there is same email or no
     const { id } = req.params
     const { email, username, firstName, lastName, profile_picture } = req.body
-
-    // Check if another user already uses this email
     const existingEmailUser = await User.findOne({ email })
     if (existingEmailUser && existingEmailUser._id.toString() !== id) {
       return res.status(400).send({ msg: "Email already in use!" })
     }
-
-    // Check if another user already uses this username
+    //this is to check to not have same username as anyone.
     const existingUsernameUser = await User.findOne({ username })
     if (existingUsernameUser && existingUsernameUser._id.toString() !== id) {
       return res.status(400).send({ msg: "Username already taken!" })
     }
 
-    // Proceed to update user info
+    // for profile picture upload, we used multer
+    let imagePath = profile_picture
+    if (req.file) {
+      const validTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"]
+
+      if (!validTypes.includes(req.file.mimetype)) {
+        return res.status(400).json({
+          error: "Invalid image format. Only JPEG, PNG, JPG, or WEBP allowed.",
+        })
+      }
+
+      imagePath = `/uploads/${req.file.filename}`
+    }
+
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { firstName, lastName, username, email, profile_picture },
+      {
+        firstName,
+        lastName,
+        username,
+        email,
+        profile_picture: imagePath,
+      },
       { new: true }
     )
 
@@ -45,12 +62,14 @@ const UpdateProfile = async (req, res) => {
     res.status(500).send({ msg: "Error updating profile" })
   }
 }
+
 const GetUserPosts = async (req, res) => {
   try {
     const { id } = req.params
     const posts = await Post.find({ user_id: id })
       .populate("challenge_id", "title")
-      .sort({ createdAt: -1 }) // optional: newest first
+      .sort({ createdAt: -1 }) // used sort here so when we post a new picture it will be shown first in the home/Profile Page and the older post will be below
+
     res.status(200).json(posts)
   } catch (error) {
     res

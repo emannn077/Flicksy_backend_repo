@@ -5,12 +5,10 @@ const CreateCameraPost = async (req, res) => {
   try {
     const { image, user_id, caption, challenge_id } = req.body
 
-    // Validation
     if (!image || !user_id) {
       return res.status(400).json({ message: "Image and user_id are required" })
     }
 
-    // Create new post
     const newPost = await Post.create({
       user_id,
       challenge_id: challenge_id || null,
@@ -18,7 +16,6 @@ const CreateCameraPost = async (req, res) => {
       caption: caption || "",
     })
 
-    // If post came from a challenge, add points
     if (challenge_id) {
       await User.findByIdAndUpdate(user_id, { $inc: { points: 10 } })
     }

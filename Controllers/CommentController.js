@@ -2,7 +2,7 @@ const Comment = require("../models/Comment")
 
 const getComments = async (req, res) => {
   try {
-    const comments = await Comment.find({}).populate("owner")
+    const comments = await Comment.find({}).populate("user")
     res.status(200).send(comments)
   } catch (error) {
     res
