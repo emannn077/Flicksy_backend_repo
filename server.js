@@ -23,7 +23,7 @@ const port = process.env.PORT || 3001
 // ===== enabling cors here ====
 app.use(
   cors({
-    origin: "http://localhost:5173", // match the actual origin
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -35,11 +35,12 @@ app.use(express.json())
 app.use(methodOverride("_method"))
 app.use(morgan("dev"))
 app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static("public"))
 app.use(cors())
 
 // ===== ROUTES =====
 app.use("/auth", authRouter) // Auth APIs
-app.use("/users", userRouter) // Protected user APIs
+app.use("/user", userRouter) // Protected user APIs
 app.use("/comment", commentRouter)
 app.use("/challenge", challengeRouter)
 app.use("/post", postRouter)

@@ -1,10 +1,8 @@
 const router = require("express").Router()
 const userCtrl = require("../controllers/AuthController")
 const middleware = require("../middleware/index")
-// Auth routes (POST only for API)
 router.post("/sign-up", userCtrl.auth_signup_post)
 router.post("/sign-in", userCtrl.auth_signin_post)
-// User protected actions
 router.put(
   "/update/:id",
   middleware.stripToken,
