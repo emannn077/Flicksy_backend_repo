@@ -70,6 +70,6 @@ changed your mind about the photo you posted or your comment had a typo? You'd b
 
 ![HomePage]()
 ***
-![SignInPage]()
+![SignInPage](./public/SignIn.png)
 ***
-![ProfilePage]()
+![SignUpPage](./public/SignUp.png)
