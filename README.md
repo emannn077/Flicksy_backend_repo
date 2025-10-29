@@ -36,14 +36,16 @@ changed your mind about the photo you posted or your comment had a typo? You'd b
 * Routes
 * controllers
 * modules
-* bootstrap
 * MongooseDB
 * insomnia
 * bcrypt
 * express
-*  mongoose
+* mongoose
 * node.js
-* react
+* middleware
+* cors
+* morgan
+* jwt
 * Model and Controllers
 
 ***
