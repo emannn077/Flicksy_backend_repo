@@ -43,15 +43,15 @@ const CreatePost = async (req, res) => {
     // Add points if the user completed a challenge
     if (challenge_id) {
       const challenge = await Challenge.findById(challenge_id)
-      const addPoints = challenge?.points || 5
+      if (challenge) {
+        const addPoints = Math.min(Math.max(challenge.points || 5, 5), 10)
 
-      addPoints = Math.min(Math.max(addPoints, 5), 10)
-
-      updatedUser = await User.findByIdAndUpdate(
-        user_id,
-        { $inc: { points: addPoints } },
-        { new: true }
-      )
+        updatedUser = await User.findByIdAndUpdate(
+          user_id,
+          { $inc: { points: addPoints } },
+          { new: true }
+        )
+      }
     }
 
     res.status(201).json(newPost)

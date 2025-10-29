@@ -30,29 +30,40 @@ const auth_signup_post = async (req, res) => {
 const auth_signin_post = async (req, res) => {
   try {
     const { username, password } = req.body
+
+    // Check if user exists
     const user = await User.findOne({ username })
-    let matched = await middleware.comparePassword(password, user.password)
-    if (matched) {
-      let payload = {
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        profile_picture: user.profile_picture,
-      }
-      let token = middleware.createToken(payload)
-      return res.status(200).send({ user: payload, token })
+    if (!user) {
+      return res.status(401).send({ status: "Error", msg: "User not found!" })
     }
-    res.status(401).send({ status: "Error", msg: "Unauthorized" })
+
+    // Check password
+    const matched = await middleware.comparePassword(password, user.password)
+    if (!matched) {
+      return res
+        .status(401)
+        .send({ status: "Error", msg: "Incorrect password!" })
+    }
+
+    // Token payload
+    const payload = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      profile_picture: user.profile_picture,
+    }
+
+    // Create token
+    const token = middleware.createToken(payload)
+
+    res.status(200).send({ user: payload, token })
   } catch (error) {
-    console.log(error)
-    res
-      .status(401)
-      .send({ status: "Error", msg: "An error has occurred logging in!" })
+    console.error("Sign-in error:", error)
+    res.status(500).send({ status: "Error", msg: "Server error during login." })
   }
 }
-
 const UpdatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body
