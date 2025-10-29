@@ -1,31 +1,30 @@
-const router = require('express').Router()
-const commentctrl = require('../Controllers/CommentController')
-const middleware = require('../middleware')
-
+const router = require("express").Router()
+const commentctrl = require("../Controllers/CommentController")
+const middleware = require("../middleware")
 
 router.get(
-  '/',
+  "/",
   middleware.stripToken,
   middleware.verifyToken,
   commentctrl.getComments
 )
 
 router.post(
-  '/',
+  "/",
   middleware.stripToken,
   middleware.verifyToken,
   commentctrl.createComments
 )
 
 router.put(
-  '/:commentId',
+  "/:commentId",
   middleware.stripToken,
   middleware.verifyToken,
   commentctrl.putComments
 )
 
 router.delete(
-  '/:commentId',
+  "/:commentId",
   middleware.stripToken,
   middleware.verifyToken,
   commentctrl.deleteComments

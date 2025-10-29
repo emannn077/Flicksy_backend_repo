@@ -1,6 +1,7 @@
-const router = require('express').Router()
-const controller = require('../controllers/UserController')
-const middleware = require('../middleware/index')
+const router = require("express").Router()
+const controller = require("../controllers/UserController")
+const middleware = require("../middleware/index")
+const upload = require("../middleware/upload")
 
 // Get user profile
 router.get(
@@ -15,6 +16,7 @@ router.put(
   '/profile/:id',
   middleware.stripToken,
   middleware.verifyToken,
+  upload.single("profile_picture"),
   controller.UpdateProfile
 )
 
