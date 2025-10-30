@@ -65,10 +65,8 @@ const UpdateProfile = async (req, res) => {
       .status(200)
       .send({ msg: "Profile updated successfully!", user: updatedUser })
   } catch (error) {
-    console.error("UpdateProfile error:", error)
-    res
-      .status(500)
-      .send({ msg: "Error updating profile", error: error.message })
+    console.error(error)
+    res.status(500).send({ msg: "Error updating profile" })
   }
 }
 
@@ -86,6 +84,7 @@ const GetUserPosts = async (req, res) => {
       .json({ message: "Failed to fetch user posts", error: error.message })
   }
 }
+
 const AddPoints = async (id, points) => {
   const user = await User.findById(id)
   if (!user) throw new Error("user not found")
