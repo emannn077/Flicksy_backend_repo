@@ -59,12 +59,11 @@ changed your mind about the photo you posted or your comment had a typo? You'd b
 
 ## ***Project Preview***
 
-![HomePage](./public/home.png)
-***
 ![SignInPage](./public/SignIn.png)
 ***
 ![Camera Page](./public/image.png)
   ***
+![ChallengePage](./public/challenge.png)
 
 ## ***Future Work***
 * To have edit and delete comment feature
