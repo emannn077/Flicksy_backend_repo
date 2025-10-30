@@ -27,9 +27,11 @@ changed your mind about the photo you posted or your comment had a typo? You'd b
 ####
 ***
 ## ERD & Figma
-### | ![ERD](FlicksyERD.png)
+###  ![ERD](FlicksyERD.png)
 ### | [Figma Link](https://www.figma.com/design/gS2yraKCDYZh3EWiLtBEsz/project-3-wire-frame?node-id=0-1&t=qvgIBTwAXNB3OOeu-1)
 ***
+## ***App Hierarchy***
+![AppHierarchy](./public/App%20hierarchy.png)
 
 ### ***Technologies used in our project***
   * MongoDB
