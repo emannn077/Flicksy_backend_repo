@@ -5,7 +5,7 @@ const upload = require("../middleware/upload")
 
 // Get user profile
 router.get(
-  '/profile/:id',
+  "/profile/:id",
   middleware.stripToken,
   middleware.verifyToken,
   controller.GetUserProfile
@@ -13,7 +13,7 @@ router.get(
 
 // Update user profile
 router.put(
-  '/profile/:id',
+  "/profile/:id/edit",
   middleware.stripToken,
   middleware.verifyToken,
   upload.single("profile_picture"),
@@ -21,14 +21,14 @@ router.put(
 )
 
 router.get(
-  '/profile/:id/posts',
+  "/profile/:id/posts",
   middleware.stripToken,
   middleware.verifyToken,
   controller.GetUserPosts
 )
 
 router.put(
-  '/:id/addPoints',
+  "/:id/addPoints",
   middleware.stripToken,
   middleware.verifyToken,
   async (req, res) => {

@@ -1,6 +1,7 @@
 const User = require("../models/User")
 const Post = require("../Models/Post")
 
+//here get posts is to get all the posts from homepage
 const GetPosts = async (req, res) => {
   try {
     const posts = await Post.find({})
@@ -12,6 +13,7 @@ const GetPosts = async (req, res) => {
   }
 }
 
+//here it is for to get one post shown in post detail page
 const GetPostById = async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId)
@@ -62,6 +64,8 @@ const CreatePost = async (req, res) => {
       .json({ error: "Failed to create post", details: err.message })
   }
 }
+
+//user can get only there post in profile page
 const GetPostsByUser = async (req, res) => {
   try {
     const { id } = req.params
@@ -79,6 +83,7 @@ const GetPostsByUser = async (req, res) => {
     res.status(500).json({ message: "Server error", details: err.message })
   }
 }
+
 const CreatePostForUser = async (req, res) => {
   try {
     const user_id = req.params.id
@@ -110,8 +115,8 @@ const CreatePostForUser = async (req, res) => {
 
 const DeletePost = async (req, res) => {
   try {
-    await Post.deleteOne({ _id: req.params.post_Id })
-    res.send({ msg: "Post Deleted", payload: req.params.post_Id, status: "Ok" })
+    const post = await Post.deleteOne({ _id: req.params.id })
+    res.send({ msg: "Post Deleted", payload: req.params.id, status: "Ok" })
   } catch (err) {
     throw err
   }
