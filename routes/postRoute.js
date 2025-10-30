@@ -12,10 +12,9 @@ router.post(
 )
 router.get("/:postId", controller.GetPostById)
 router.delete(
-  "/:postId",
+  "/:id",
   middleware.stripToken,
   middleware.verifyToken,
   controller.DeletePost
 )
-
 module.exports = router

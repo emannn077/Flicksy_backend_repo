@@ -13,7 +13,7 @@ router.get(
 
 // Update user profile
 router.put(
-  "/profile/:id",
+  "/profile/:id/edit",
   middleware.stripToken,
   middleware.verifyToken,
   upload.single("profile_picture"),
@@ -26,4 +26,5 @@ router.get(
   middleware.verifyToken,
   controller.GetUserPosts
 )
+
 module.exports = router

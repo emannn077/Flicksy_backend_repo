@@ -22,18 +22,4 @@ router.post(
   commentctrl.createComments
 )
 
-router.put(
-  "/:commentId",
-  middleware.stripToken,
-  middleware.verifyToken,
-  commentctrl.putComments
-)
-
-router.delete(
-  "/:commentId",
-  middleware.stripToken,
-  middleware.verifyToken,
-  commentctrl.deleteComments
-)
-
 module.exports = router

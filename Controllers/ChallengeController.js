@@ -1,4 +1,4 @@
-const Challenge = require('../Models/Challenge')
+const Challenge = require("../Models/Challenge")
 //
 const GetChallenges = async (req, res) => {
   try {
@@ -31,9 +31,9 @@ const DeleteChallenge = async (req, res) => {
   try {
     await Challenge.deleteOne({ _id: req.params.challenge_id })
     res.send({
-      msg: 'Challenge deleted',
+      msg: "Challenge deleted",
       payload: req.params.challenge_id,
-      status: 'Ok'
+      status: "Ok",
     })
   } catch (err) {
     throw err
@@ -43,5 +43,5 @@ module.exports = {
   GetChallenges,
   GetChallengeById,
   CreateChallenge,
-  DeleteChallenge
+  DeleteChallenge,
 }

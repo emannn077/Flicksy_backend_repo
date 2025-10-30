@@ -110,8 +110,8 @@ const CreatePostForUser = async (req, res) => {
 
 const DeletePost = async (req, res) => {
   try {
-    await Post.deleteOne({ _id: req.params.post_Id })
-    res.send({ msg: "Post Deleted", payload: req.params.post_Id, status: "Ok" })
+    const post = await Post.deleteOne({ _id: req.params.id })
+    res.send({ msg: "Post Deleted", payload: req.params.id, status: "Ok" })
   } catch (err) {
     throw err
   }
