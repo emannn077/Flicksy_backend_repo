@@ -1,8 +1,8 @@
-![HomePage]()
+
 # Flicksy
 ## Date: 23/10/2025
 
-### By: eman Rauf, Jameela Mohammed, Naser hubaishi
+### By: Eman Rauf, Jameela Mohammed, Naser hubaishi
 ### | [Eman GitHub](https://github.com/emannn077) | [Jameela GitHub](https://github.com/jamsaeed)| [Naser GitHub](https://github.com/envwx)
 ***
 ### ***Description***
@@ -32,44 +32,43 @@ changed your mind about the photo you posted or your comment had a typo? You'd b
 ***
 
 ### ***Technologies used in our project***
-* javascript
-* Routes
-* controllers
-* modules
-* MongooseDB
-* insomnia
-* bcrypt
-* express
-* mongoose
-* node.js
-* middleware
-* cors
-* morgan
-* jwt
-* Model and Controllers
+  * MongoDB
+  * Express
+  * Node.js
+  * React
+  * Github
+  * react webcam
+  * Insomia
 
 ***
 
 # Featuring in the project
 
-* home page
-* challenges
-* profile page
-* posts feed
-* comments under posts
-* sign up and sign in
-* ability to post photos
-* can take photos via camera
-* can delete photos that been posted
-* points system
+* Home Page
+* Play Challenges
+* Profile page
+* Posting Photo in Real Time
+* Comment Feature
+* Sign In/ Sign Up
+* Camera Page
+* Delete the Post
+* Add a Challenge
 ***
-# Unresolved problems
-* not yet detected
-***
+
 ## ***Project Preview***
 
-![HomePage]()
+![HomePage](./public/home.png)
 ***
 ![SignInPage](./public/SignIn.png)
 ***
-![SignUpPage](./public/SignUp.png)
+![Camera Page](./public/image.png)
+  ***
+
+## ***Future Work***
+* To have edit and delete comment feature
+* To have Like and Favorite the post feature
+* To have ready made cool captions so the user can select easily
+
+## ***References ***
+* https://www.npmjs.com/package/react-webcam
+* For Profile Page implementation i took a hint/idea from "https://medium.com/@s.frei1996/creating-your-first-react-profile-page-cf0a00c8dfa0"
