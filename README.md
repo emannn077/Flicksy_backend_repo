@@ -3,7 +3,7 @@
 ## Date: 23/10/2025
 
 ### By: eman Rauf, Jameela Mohammed, Naser hubaishi
-### | [Eman GitHub](https://github.com/emannn077) | [Jameela GitHub](https://github.com/jamsaeed)| [Naser GutHub](https://github.com/envwx)
+### | [Eman GitHub](https://github.com/emannn077) | [Jameela GitHub](https://github.com/jamsaeed)| [Naser GitHub](https://github.com/envwx)
 ***
 ### ***Description***
 Flicksy, a home base for exploring everything happening around, from newly posted photos to bunch of fun challenges!
@@ -36,14 +36,16 @@ changed your mind about the photo you posted or your comment had a typo? You'd b
 * Routes
 * controllers
 * modules
-* bootstrap
 * MongooseDB
 * insomnia
 * bcrypt
 * express
-*  mongoose
+* mongoose
 * node.js
-* react
+* middleware
+* cors
+* morgan
+* jwt
 * Model and Controllers
 
 ***
@@ -57,7 +59,9 @@ changed your mind about the photo you posted or your comment had a typo? You'd b
 * comments under posts
 * sign up and sign in
 * ability to post photos
+* can take photos via camera
 * can delete photos that been posted
+* points system
 ***
 # Unresolved problems
 * not yet detected
@@ -66,6 +70,6 @@ changed your mind about the photo you posted or your comment had a typo? You'd b
 
 ![HomePage]()
 ***
-![SignInPage]()
+![SignInPage](./public/SignIn.png)
 ***
-![ProfilePage]()
+![SignUpPage](./public/SignUp.png)
